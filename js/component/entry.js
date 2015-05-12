@@ -16,6 +16,11 @@ var style = {
 	},
 	details: {
 		'float': 'left'
+	},
+	navbar: {
+		'height': '100%',
+		'width': '250px',
+		'background': '#AEC5B9'
 	}
 };
 var NavData = {
@@ -45,7 +50,7 @@ React.render(
 		<MapLegend style={style.mapLengend} width={mapLegendWidth} domain={mapLegendDomain} range={mapLegendRange}/>
 		<TaipeiMap style={style.map} width={mapWidth} height={mapHeight} />
 		<Details style={style.details}></Details>
-		<NavBar data={NavData}></NavBar>
+		<NavBar style={style.navbar} data={NavData}></NavBar>
 	</div>,
 	container
 );
