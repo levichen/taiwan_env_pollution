@@ -73,7 +73,7 @@ module.exports = React.createClass({
 		}
 
 		return (
-			<div style={this.props.style} ref="details">
+			<div style={this.props.style} ref="details" className="details">
 				<div id="detail-head">
 					<div id="detail-name" style={nameStyle}>Name</div>
 					<div id="detail-digram" style={digramStyle}>Digram</div>

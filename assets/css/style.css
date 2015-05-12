@@ -1,0 +1,109 @@
+@charset "utf-8";
+html, body {
+    /*background-color: #E9EAE1;*/
+    margin: 0;
+    height: 100%;
+    min-height: 500px;
+    overflow: hidden;
+    user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-user-select: none;
+}
+span {
+    font-family: helvetica, arial, sans-serif;
+    letter-spacing: .5px;
+}
+::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background: #49553F;
+    /*-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); */
+}
+::-webkit-scrollbar-thumb:window-inactive {
+    background: #49553F;
+}
+::-webkit-input-placeholder {
+    text-align: center;
+}
+:-moz-placeholder {
+    /* Firefox 18- */
+    
+    text-align: center;
+}
+::-moz-placeholder {
+    /* Firefox 19+ */
+    
+    text-align: center;
+}
+:-ms-input-placeholder {
+    text-align: center;
+}
+
+#mainContainer {
+    width: 100%;
+    height: 100%;
+}
+#container {
+    width: 1024px;
+}
+#navbar {
+    position: absolute;
+    left: 0;
+    z-index: 10;
+    width: 300px;
+    height: 100%;
+    background: #AEC5B9;
+}
+
+.content-title {
+    width: 100%;
+    font-size: 3em;
+    font-weight: bolder;
+    text-align: center;
+    padding: 20px 0;
+}
+.container-content {
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: flex;
+}
+.map-legend {
+    width: 130px;
+}
+.taipei-map {
+    -webkit-flex: 1;
+    -moz-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+}
+.details {
+    width: 230px;
+}
+.center {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-pack: center;
+    -moz-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-box-pack: center;
+    -moz-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+}

@@ -57,7 +57,7 @@ module.exports = React.createClass({
 
 	render: function() {
 		return (
-			<div id="map" style={this.props.style}>
+			<div id="map" style={this.props.style} className="taipei-map">
 				<svg width={this.props.width} height={this.props.height}>
 					<g ref="map"></g>
 					<FactoryAirPollution projection={this.state.projection}/>

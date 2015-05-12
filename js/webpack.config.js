@@ -1,10 +1,10 @@
 var path = require('path');
 
 var config = {
-    entry: './component/entry.js',
+    entry: path.resolve(__dirname, './app/app.js'),
     output: {
-        path: path.resolve(__dirname, 'build'),
-        filename: 'bundle.js'
+        path: path.resolve(__dirname, '../assets/js'),
+        filename: 'main.js'
     },
     module: {
     	loaders: [

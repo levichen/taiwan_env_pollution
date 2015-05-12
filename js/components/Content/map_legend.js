@@ -41,7 +41,7 @@ module.exports = React.createClass({
 		var width = 100;
 
 		return (
-			<div style={this.props.style}>
+			<div style={this.props.style} className="map-legend">
 				<svg ref="maplegend" height={height} width={width}></svg>
 			</div>
 		);
