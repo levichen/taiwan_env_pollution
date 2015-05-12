@@ -1,6 +1,6 @@
 var React = require('react');
 var d3 = require('d3');
-var FactoryAirPollution = require('./factory_air_pollution');
+var BrokenLineChart = require('./broken_line_chart');
 
 var digramWidth = 210, digramHeight = 30;
 var nameStyle = {
@@ -19,11 +19,22 @@ var digramStyle = {
 };
 
 module.exports = React.createClass({
+
 	getInitialState: function() {
-		return {data: []};
+		return {
+			data: []
+		};
 	},
 
 	componentDidMount: function() {
+		// $.get('test', function(result) {
+		// 	if (result) {
+		// 		this.setState({
+		// 			data: result
+		// 		});
+		// 	}
+		// }.bind(this));
+
 		var dummyData = [
 			{name: '松山區', data: []},
 			{name: '信義區', data: []},
@@ -57,7 +68,7 @@ module.exports = React.createClass({
 	render: function() {
 		var items = [];
 		for (var i = 0; i < this.state.data.length; i++) {
-			items.push(<FactoryAirPollution titleWidth={90} digramWidth={120} height={digramHeight} 
+			items.push(<BrokenLineChart titleWidth={90} digramWidth={120} height={digramHeight} 
 				title={this.state.data[i].name} data={this.state.data[i].data} />);
 		}
 
