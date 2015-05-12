@@ -2,6 +2,7 @@ var React = require('react');
 var TaipeiMap = require('./taipei_map');
 var MapLegend = require('./map_legend');
 var Details = require('./details');
+var NavBar = require('./NavBar');
 var container;
 var mapWidth, mapHeight;
 var mapLegendWidth, mapLegendHeight, mapLegendDomain, mapLegendRange;
@@ -17,6 +18,9 @@ var style = {
 		'float': 'left'
 	}
 };
+var NavData = {
+	type: "default"
+}
 
 function initMapArgs() {
 	mapWidth = 540;
@@ -41,6 +45,7 @@ React.render(
 		<MapLegend style={style.mapLengend} width={mapLegendWidth} domain={mapLegendDomain} range={mapLegendRange}/>
 		<TaipeiMap style={style.map} width={mapWidth} height={mapHeight} />
 		<Details style={style.details}></Details>
+		<NavBar data={NavData}></NavBar>
 	</div>,
 	container
 );
