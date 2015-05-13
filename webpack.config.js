@@ -7,7 +7,7 @@ var config = {
         path.resolve(__dirname, 'dev/entry.js')
     ],
     output: {
-        path: path.resolve(__dirname, 'app'),
+        path: path.resolve(__dirname, 'app/assets/js/'),
         publicPath: '/assets/js/',
         filename: 'main.js'
     },
