@@ -65,31 +65,6 @@ span {
     background: #AEC5B9;
 }
 
-.content-title {
-    width: 100%;
-    font-size: 3em;
-    font-weight: bolder;
-    text-align: center;
-    padding: 20px 0;
-}
-.container-content {
-    display: -webkit-flex;
-    display: -moz-flex;
-    display: -ms-flex;
-    display: flex;
-}
-.map-legend {
-    width: 130px;
-}
-.taipei-map {
-    -webkit-flex: 1;
-    -moz-flex: 1;
-    -ms-flex: 1;
-    flex: 1;
-}
-.details {
-    width: 230px;
-}
 .center {
     display: -webkit-box;
     display: -moz-box;
@@ -106,4 +81,54 @@ span {
     -ms-flex-pack: center;
     -webkit-justify-content: center;
     justify-content: center;
+}
+
+.content-title {
+    width: 100%;
+    font-size: 3em;
+    font-weight: bolder;
+    text-align: center;
+    padding: 20px 0;
+}
+
+.container-content {
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: flex;
+}
+
+#container-content > .map-legend {
+    margin-top: 20px;
+}
+
+#container-content > .taipei-map {
+    -webkit-flex: 1;
+    -moz-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+}
+
+#container-content > .details {
+    /*width: 20px;*/
+}
+
+#container-content > .details > #head > #name {
+    float: left;
+    font-weight: 700;
+    text-align: right;
+    font-size: 10px;
+    width: 60px;
+}
+
+#container-content > .details > #head > #digram {
+    float: left;
+    font-weight: 700;
+    text-align: center;
+    font-size: 10px;
+    width: 120px;
+}
+
+#container-content > .details > #content {
+    margin-top: 20px;
 }

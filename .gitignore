@@ -1,4 +1,3 @@
 .DS_Store
-js/node_modules
-js/build/*
-js/build/bundle.js
+node_modules
+app/assets/js/main.js

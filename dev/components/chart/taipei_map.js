@@ -20,7 +20,7 @@ module.exports = React.createClass({
 		var taipeiMap = d3.select(React.findDOMNode(this.refs.map));
 		var that = this;
 				
-		d3.json('geojson/twonship.json', function(err, taiwan) {
+		d3.json('assets/geojson/twonship.json', function(err, taiwan) {
 			if (err) {
 				return 'error';
 			}

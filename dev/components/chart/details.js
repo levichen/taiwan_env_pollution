@@ -2,22 +2,6 @@ var React = require('react');
 var d3 = require('d3');
 var BrokenLineChart = require('./broken_line_chart');
 
-var digramWidth = 210, digramHeight = 30;
-var nameStyle = {
-	'float': 'left', 
-	'fontWeight': '700', 
-	'textAlign': 'right',
-	'fontSize': '10px',
-	'width': '90px'
-};
-var digramStyle = {
-	'float': 'left', 
-	'fontWeight': '700', 
-	'textAlign': 'center',
-	'fontSize': '10px',
-	'width': '120px'
-};
-
 module.exports = React.createClass({
 
 	getInitialState: function() {
@@ -68,17 +52,17 @@ module.exports = React.createClass({
 	render: function() {
 		var items = [];
 		for (var i = 0; i < this.state.data.length; i++) {
-			items.push(<BrokenLineChart titleWidth={90} digramWidth={120} height={digramHeight} 
-				title={this.state.data[i].name} data={this.state.data[i].data} />);
+			items.push(<BrokenLineChart class="digram" titleWidth={60} digramWidth={120} height={30} 
+				title={this.state.data[i].name} data={this.state.data[i].data} key={i} />);
 		}
 
 		return (
-			<div style={this.props.style} ref="details" className="details">
-				<div id="detail-head">
-					<div id="detail-name" style={nameStyle}>Name</div>
-					<div id="detail-digram" style={digramStyle}>Digram</div>
+			<div ref="details" className="details">
+				<div id="head">
+					<div id="name">Name</div>
+					<div id="digram">Digram</div>
 				</div>
-				<div style={{marginTop: '20px'}}>{items}</div>
+				<div id="content">{items}</div>
 			</div>
 		);
 	}
