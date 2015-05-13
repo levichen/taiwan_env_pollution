@@ -48,8 +48,9 @@
 	var MainContent = __webpack_require__(183);
 	var NavBar = __webpack_require__(2);
 
-	React.render(
+	React.render(	
 	   	React.createElement("div", {id: "mainContainer", className: "center"}, 
+	   		React.createElement("div", {className: "mainContainer-bg"}), 
 	        React.createElement(NavBar, null), 
 	   	    React.createElement(MainContent, null)
 	   	 ) ,
@@ -163,6 +164,16 @@
 
 	var NavBarContent = React.createClass({displayName: "NavBarContent",
 	    
+	    componentDidMount: function() {
+	        this.refs.navMarkClick.getDOMNode().addEventListener('click', function() {
+	            var navbar = document.getElementById("navbar");
+	            if(navbar.classList.contains("nav-hide")) {
+	                navbar.classList.remove("nav-hide");
+	            } else {
+	                navbar.classList.add("nav-hide");
+	            }
+	        });
+	    },
 	    render: function() {
 	        // var props = this.props;
 	        var content = [];
@@ -174,7 +185,10 @@
 	        //         break;            
 	        // }
 	        return (
-	            React.createElement("div", {id: "navbar"}, 
+	            React.createElement("div", {id: "navbar", className: "animate-all"}, 
+	                React.createElement("div", {className: "nav-mark", ref: "navMarkClick"}, 
+	                    React.createElement("div", {className: "icon-menu-white"})
+	                ), 
 	                content
 	            )
 	        );
@@ -32167,8 +32181,7 @@
 		render: function() {
 			var style = {
 				mapLengend: {
-					'float': 'left',
-					'paddingTop': '20px'
+					'float': 'left'
 				},
 				map: {
 					'float': 'left'
@@ -32177,11 +32190,16 @@
 					'float': 'left'
 				}
 			};
+			// var content_bg = this.porps.data.bg;
+			var content_bg = 'content-bg-taipei';
 			return (
-				React.createElement("div", {id: "container-content", className: "center"}, 
-					React.createElement(MapLegend, {style: style.mapLengend, width: mapLegendWidth, domain: mapLegendDomain, range: mapLegendRange}), 
-					React.createElement(TaipeiMap, {style: style.map, width: mapWidth, height: mapHeight}), 
-					React.createElement(Details, {style: style.details})
+				React.createElement("div", {className: "container-content center"}, 
+					React.createElement("div", {className: "content-box"}, 
+						React.createElement(MapLegend, {style: style.mapLengend, width: mapLegendWidth, domain: mapLegendDomain, range: mapLegendRange}), 
+						React.createElement(TaipeiMap, {style: style.map, width: mapWidth, height: mapHeight}), 
+						React.createElement(Details, {style: style.details})
+					), 
+					React.createElement("div", {className: content_bg})
 				)
 			);
 		}
@@ -32448,9 +32466,9 @@
 								return y(d);
 							});
 			digram.append('path')
-				.attr('fill', '#FFFFFF')
-				.attr('stroke', '#D2B48C')
-				.attr('stroke-width', '0.5')
+				.attr('fill', 'rgba(255, 255, 255, 0)')
+				.attr('stroke', '#CE4D4D')
+				.attr('stroke-width', '1')
 				.attr('transform', 'translate('+(this.props.titleWidth+margin)+', 0)')
 				.attr('d', line(data));
 		},

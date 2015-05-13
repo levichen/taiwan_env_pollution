@@ -24,8 +24,7 @@ var Content = React.createClass({
 	render: function() {
 		var style = {
 			mapLengend: {
-				'float': 'left',
-				'paddingTop': '20px'
+				'float': 'left'
 			},
 			map: {
 				'float': 'left'
@@ -34,11 +33,16 @@ var Content = React.createClass({
 				'float': 'left'
 			}
 		};
+		// var content_bg = this.porps.data.bg;
+		var content_bg = 'content-bg-taipei';
 		return (
-			<div id="container-content" className="center">
-				<MapLegend style={style.mapLengend} width={mapLegendWidth} domain={mapLegendDomain} range={mapLegendRange}/>
-				<TaipeiMap style={style.map} width={mapWidth} height={mapHeight} />
-				<Details style={style.details}></Details>
+			<div className="container-content center">
+				<div className='content-box'>
+					<MapLegend style={style.mapLengend} width={mapLegendWidth} domain={mapLegendDomain} range={mapLegendRange}/>
+					<TaipeiMap style={style.map} width={mapWidth} height={mapHeight} />
+					<Details style={style.details}></Details>
+				</div>
+				<div className={content_bg} />
 			</div>
 		);
 	}

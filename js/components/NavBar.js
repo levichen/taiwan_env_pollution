@@ -3,6 +3,16 @@ var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 
 var NavBarContent = React.createClass({
     
+    componentDidMount: function() {
+        this.refs.navMarkClick.getDOMNode().addEventListener('click', function() {
+            var navbar = document.getElementById("navbar");
+            if(navbar.classList.contains("nav-hide")) {
+                navbar.classList.remove("nav-hide");
+            } else {
+                navbar.classList.add("nav-hide");
+            }
+        });
+    },
     render: function() {
         // var props = this.props;
         var content = [];
@@ -14,7 +24,10 @@ var NavBarContent = React.createClass({
         //         break;            
         // }
         return (
-            <div id="navbar">
+            <div id="navbar" className="animate-all">
+                <div className="nav-mark" ref="navMarkClick">
+                    <div className="icon-menu-white" />
+                </div>
                 {content}                    
             </div>
         );
