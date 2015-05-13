@@ -142,10 +142,6 @@ span {
     border-radius: 0px 15px 15px 0px;
     -moz-border-radius: 0px 15px 15px 0px;
     -webkit-border-radius: 0px 15px 15px 0px;
-    box-shadow: 5px 5px 11px -3px #8a888a;
-    -webkit-box-shadow: 5px 5px 11px -3px #8a888a;
-    -moz-box-shadow: 5px 5px 11px -3px #8a888a;
-    -ms-box-shadow: 5px 5px 11px -3px #8a888a;
 }
 .nav-hide {
     left: -300px !important;
