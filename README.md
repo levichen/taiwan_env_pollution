@@ -1,8 +1,8 @@
 # taipei_air_pollution
 
-####切換至 js 目錄
+####切換專案目錄
 ```
-cd {project_path}/js
+cd {project_path}
 ```
 
 ####安裝node_module
@@ -10,12 +10,12 @@ cd {project_path}/js
 npm install
 ```
 
-####編譯js 
+####執行程式 
 ```
-webpack --process --watch
+npm run dev
 ```
 
-####輸入網址 
+####瀏覽畫面
 ```
-http://xxxxx/index.html
+http://localhost:8080
 ```
