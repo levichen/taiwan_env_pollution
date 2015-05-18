@@ -35,9 +35,9 @@ module.exports = React.createClass({
 							return y(d);
 						});
 		digram.append('path')
-			.attr('fill', '#FFFFFF')
-			.attr('stroke', '#D2B48C')
-			.attr('stroke-width', '0.5')
+			.attr('fill', 'rgba(255, 255, 255, 0)')
+			.attr('stroke', '#CE4D4D')
+			.attr('stroke-width', '1')
 			.attr('transform', 'translate('+(this.props.titleWidth+margin)+', 0)')
 			.attr('d', line(data));
 	},
