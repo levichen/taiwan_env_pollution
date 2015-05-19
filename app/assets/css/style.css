@@ -190,11 +190,59 @@ span {
     -ms-flex: 1;
     flex: 1;
 }
-.nav-box-sub-checkbox {
-    width: 30px;
-    padding: 10px 0 10px 0;
+.nav-box-sub-checkbox {    
+    padding: 10px 10px 10px 10px;
 }
-
+.nav-box-sub-checkbox > input {
+    width: 20px;
+    height: 20px;
+}
+.search-box {
+    padding: 20px 0 20px 0;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: flex;
+}
+.search-box > div:nth-child(1) {
+    -webkit-flex: 1;
+    -moz-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+}
+.search-box > div:nth-child(2) {
+    width: 70px;
+}
+.search-box > div:nth-child(1) > input {
+    height: 20px;
+    width: 150px;
+    border: 1px solid #6F6F6F;
+    padding: 0px 10px 0px 10px;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    -ms-border-radius: 15px;
+    border-radius: 15px;
+    transition: width .20s ease-in;
+    -moz-transition: width .20s ease-in;
+    -webkit-transition: width .20s ease-in;
+    -ms-transition: width .20s ease-in;
+}
+.search-box > div:nth-child(1) > input:focus {
+    outline: 0;
+    width: 200px;    
+}
+.search-box > div:nth-child(2) > input {    
+    outline: 0;
+    height: 20px;
+    border: 1px solid #6F6F6F;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    -ms-border-radius: 15px;
+    border-radius: 15px;
+}
+.search-box > div:nth-child(2) > input:active {    
+    background: #fff;
+}
 
 
 .icon-menu-white {

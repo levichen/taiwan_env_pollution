@@ -14,10 +14,14 @@ var NavBarContent = React.createClass({
                 navbar.classList.add("nav-hide");
             }
         });
+
+        this.refs.searchClick.getDOMNode().addEventListener('click', function() {
+            var search_val = document.getElementById("search-val").value;
+            /* call action */
+        });
     },
-    render: function() {
-        var props = this.props;
-        var content = props.navList.map(function(listData) {
+    renderContent: function() {
+        var content = this.props.navList.map(function(listData) {
             var attr = {};
             attr.listType = listData.type;
             attr.listTitle = listData.title;
@@ -26,14 +30,21 @@ var NavBarContent = React.createClass({
             return (
                 <NavBarContentBox {...attr} />
             );
-        });        
-        
+        });
+
+        return {content};
+    },
+    render: function() {
         return (
             <div id="navbar" className="animate-all">
                 <div className="nav-mark" ref="navMarkClick">
                     <div className="icon-menu-white" />
                 </div>
-                {content}                    
+                <div className="search-box">
+                    <div className="center"><input type="text" id="search-val" /></div>
+                    <div className="center"><input type="button" value="Search"  ref="searchClick" /></div>
+                </div>
+                {this.renderContent()}
             </div>
         );
     }
