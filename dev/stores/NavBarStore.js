@@ -40,7 +40,7 @@ var NavBarStore = Reflux.createStore({
 	getInitialState: function() {
         return {
             navList: this.navList,
-            enabled: true
+            enabled: false
         };
     },
 });

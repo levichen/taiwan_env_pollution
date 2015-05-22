@@ -1,4 +1,5 @@
 var React = require('react');
+var Reflux = require('reflux');
 var Content = require('./chart/Content');
 
 var MainContent = React.createClass({

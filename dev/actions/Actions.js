@@ -1,8 +1,9 @@
 var Reflux = require('reflux');
 
 var actions = Reflux.createActions([
-	'initNavList'
+	'initNavList',
 
+	'changeLocation'
 ]);
 
 module.exports = actions;

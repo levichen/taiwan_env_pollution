@@ -18,11 +18,12 @@ var config = {
                 loader: 'jsx-loader?insertPragma=React.DOM&harmony'
             }
         ]
+    },
+    externals: {
+        // 'react': 'React',
+        // 'd3': 'd3'
+        // 'h337': 'h337'
     }
-    // externals: {
-    //     'react': 'React',
-    //     'd3': 'd3'
-    // }
 };
 
 module.exports = config;

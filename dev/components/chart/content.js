@@ -9,8 +9,7 @@ var Content = React.createClass({
 
 	initMapArgs: function() {
 		mapWidth = 540;
-		mapHeight = 600;
-		console.log(mapWidth);
+		mapHeight = 600;	
 	},
 	initMapLegendArgs: function() {
 		mapLegendDomain = [50, 100, 150, 200, 300, 500];
@@ -22,25 +21,14 @@ var Content = React.createClass({
 		this.initMapLegendArgs();
 	},
 	render: function() {
-		var style = {
-			mapLengend: {
-				'float': 'left'
-			},
-			map: {
-				'float': 'left'
-			},
-			details: {
-				'float': 'left'
-			}
-		};
 		// var content_bg = this.porps.data.bg;
 		var content_bg = 'content-bg-taipei';
 		return (
 			<div className="container-content center">
 				<div className='content-box'>
-					<MapLegend style={style.mapLengend} width={mapLegendWidth} domain={mapLegendDomain} range={mapLegendRange}/>
-					<TaipeiMap style={style.map} width={mapWidth} height={mapHeight} />
-					<Details style={style.details}></Details>
+					<MapLegend width={mapLegendWidth} domain={mapLegendDomain} range={mapLegendRange}/>
+					<TaipeiMap width={mapWidth} height={mapHeight} />
+					<Details></Details>
 				</div>
 				<div className={content_bg} />
 			</div>
