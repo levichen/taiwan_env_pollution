@@ -2,13 +2,13 @@ var React = require('react');
 var Reflux = require('reflux');
 var d3 = require('d3');
 var Actions = require('../../../../actions/Actions');
-var MoinorLayerStore = require('../../../../stores/MinorLayerStore');
+var MoinorLayerStore = require('../../../../stores/MinorLayerStore');;
 
 module.exports = React.createClass({
 
 	mixins: [
 		// Reflux.connect(MoinorLayerStore)
-		Reflux.listenTo(MoinorLayerStore, 'onDataChange')
+		Reflux.listenTo(MoinorLayerStore, 'onDraw')
 	],
 
 	getInitialState: function() {
@@ -54,7 +54,7 @@ module.exports = React.createClass({
 		}
 	},
 
-	onDataChange: function(type) {
+	onDraw: function(type) {
 		if (type === MoinorLayerStore.type.CHANGE_SELECT) {
 			var data = {};
 			for (var i = 0; i < arguments[1].length && this.state.data !== undefined; i++) {
@@ -66,13 +66,13 @@ module.exports = React.createClass({
 				data: data
 			});
 		}
-		else {
+		else if (type === MoinorLayerStore.type.UPDATE_DATA) {
 			var data = this.state.data || {};
 			data[arguments[1]] = arguments[2];
 			this.setState({data: data});
 		}
 		
 		this.drawLayer();
-	}
+	},
 
 });

@@ -8,7 +8,8 @@ module.exports = Reflux.createStore({
 
 	type: {
 		CHANGE_SELECT: 0,
-		UPDATE_DATA: 1
+		UPDATE_DATA: 1,
+		REDRAW: 2
 	},
 
 	getData: function(type) {
@@ -18,7 +19,7 @@ module.exports = Reflux.createStore({
 			url: 'http://ltzuhsiu.org:3333/minordata/' + type,
 			dataType: 'json'
 		}).done(function(data) {
-			that.trigger(this.type.UPDATE_DATA, type, data);
+			that.trigger(that.type.UPDATE_DATA, type, data);
 		}).fail(function(err, msg) {
 			console.log(msg);
 		});
@@ -29,6 +30,10 @@ module.exports = Reflux.createStore({
 			this.getData(selectedData[i]);
 		}
 		this.trigger(this.type.CHANGE_SELECT, selectedData);
+	},
+
+	onChangeLocation: function() {
+		this.trigger(this.type.REDRAW);
 	}
 
 });
