@@ -6,7 +6,9 @@ var actions = Reflux.createActions([
 	'changeLocation',
 
 	'initialAirQuilityData',
-	'initialMoinorData'
+	'initialMoinorData',
+
+	'navBarSelectedData'
 ]);
 
 module.exports = actions;

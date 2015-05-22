@@ -9,29 +9,37 @@ var NavBarStore = Reflux.createStore({
 		this.navList = [
 			{
 				"type": 1,
-				"title": "Range",
+				"title": "範圍",
 				"sub": [
 					{
-						"sub_id": 0,
+						"sub_id": "factory",
 						"sub_title": "工廠排放"
 					},
-					{
-						"sub_id": 1,
-						"sub_title": "河川汙染"
-					}
+					// {
+					// 	"sub_id": 1,
+					// 	"sub_title": "河川汙染"
+					// }
 				]
 			},
 			{
 				"type": 2,
-				"title": "Location",
+				"title": "地點",
 				"sub": [
 					{
-						"sub_id": 2,
-						"sub_title": "民眾陳情"
+						"sub_id": "incinerators",
+						"sub_title": "焚化爐"
 					},
 					{
-						"sub_id": 3,
-						"sub_title": "有人類"
+						"sub_id": "garbage",
+						"sub_title": "垃圾場"
+					},
+					{
+						"sub_id": "airstation",
+						"sub_title": "空氣污染站"
+					},
+					{
+						"sub_id": "petition",
+						"sub_title": "民眾陳情地點"
 					}
 				]
 			}

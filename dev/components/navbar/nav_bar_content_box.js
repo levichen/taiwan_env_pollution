@@ -1,13 +1,17 @@
 var React = require('react');
+var Actions = require('../../actions/Actions');
 
 var NavBarContentBox = React.createClass({	
 	componentDidMount: function() {
-		var checkboxs = this.refs.optionSelect.getDOMNode().querySelectorAll('input[type=checkbox]');
+		var checkboxs = React.findDOMNode(this.refs.optionSelect).querySelectorAll('input[type=checkbox]');
 		for (var i in checkboxs) {
 			checkboxs[i].onchange = function() {
             	var checkedValue = document.querySelectorAll('.nav-options:checked');
-            	/* call action */
-            	console.log(checkedValue)
+            	var val = [];
+              for (var j=0; j < checkedValue.length; j++) {
+                val.push(checkedValue[j].defaultValue);
+              }
+              Actions.navBarSelectedData(val);
         	};
 		}
     },

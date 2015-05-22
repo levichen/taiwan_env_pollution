@@ -193,7 +193,8 @@ span {
 }
 .nav-box-title {
     width: 100%;
-    font-size: 1em;
+    font-size: 22px;
+    line-height: 35px;
     text-align: center;
     background: rgba(0, 0, 0, 0.26);
 }
@@ -255,7 +256,7 @@ span {
 }
 .search-box > div:nth-child(2) > input {    
     outline: 0;
-    height: 20px;
+    height: 22px;
     border: 1px solid #6F6F6F;
     -webkit-border-radius: 15px;
     -moz-border-radius: 15px;
@@ -293,4 +294,8 @@ span {
 
 #container-content > .details > #content {
     margin-top: 20px;
+}
+
+#div-svg {
+    z-index: 9;
 }

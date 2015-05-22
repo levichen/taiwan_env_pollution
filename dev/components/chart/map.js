@@ -30,7 +30,7 @@ module.exports = React.createClass({
 	render: function() {
 		return (
 			<div id="map" ref="mapContainer" className="taipei-map">
-				<div>
+				<div id="div-svg">
 					<svg width={this.props.width} height={this.props.height}>
 						<g ref="map"></g>
 					</svg>
@@ -79,7 +79,7 @@ module.exports = React.createClass({
 				.data(taiwan.features)
 				.enter()
 				.append('path')
-				.attr('fill', '#FFF')
+				.attr('fill', 'transparent')
 				.attr('stroke', '#000')
 				.attr('storke-width', 1)
 				.attr('d', path)
@@ -90,6 +90,7 @@ module.exports = React.createClass({
 					// console.log('mouseout');
 				})
 				.on('mousedown', function(data, i) {
+					console.log(i)
 					Actions.changeLocation(data.properties.County_ID, data.properties.C_Name);
 				});
 		});

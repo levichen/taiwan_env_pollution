@@ -18,6 +18,11 @@ module.exports = Reflux.createStore({
 		}).fail(function(err, msg) {
 			console.log(msg);
 		});
+	},
+
+	onNavBarSelectedData: function(selectedData) {
+		this.trigger({selectedData: selectedData});
+		// console.log(selectedData)
 	}
 
 });
