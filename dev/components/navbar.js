@@ -1,16 +1,20 @@
 var React = require('react/addons');
 var Reflux = require('reflux');
 var NavBarStore = require('../stores/NavBarStore');
+var Actions = require('../actions/Actions');
 var NavBarContentBox = require('./navbar/nav_bar_content_box');
 
 var NavBarContent = React.createClass({
     
     componentDidMount: function() {
-        this.refs.navMarkClick.getDOMNode().addEventListener('click', function() {
-            var navbar = document.getElementById("navbar");
+        var navbar = React.findDOMNode(this.refs.navDisplay);
+        navbar.addEventListener('mouseover', function() {
             if(navbar.classList.contains("nav-hide")) {
                 navbar.classList.remove("nav-hide");
-            } else {
+            }
+        });
+        navbar.addEventListener('mouseout', function() {
+            if(!navbar.classList.contains("nav-hide")) {
                 navbar.classList.add("nav-hide");
             }
         });
@@ -36,8 +40,8 @@ var NavBarContent = React.createClass({
     },
     render: function() {
         return (
-            <div id="navbar" className="animate-all">
-                <div className="nav-mark" ref="navMarkClick">
+            <div id="navbar" ref="navDisplay" className="animate-all">
+                <div className="nav-mark">
                     <div className="icon-menu-white" />
                 </div>
                 <div className="search-box">
