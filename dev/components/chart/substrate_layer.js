@@ -7,7 +7,8 @@ var Actions = require('../../actions/Actions');
 module.exports = React.createClass({
 
 	mixins: [
-		Reflux.connect(AirQuilityStore, 'airQuility')
+		// Reflux.connect(AirQuilityStore, 'airQuility')
+		Reflux.listenTo(AirQuilityStore, 'onDrawLayer')
 	],
 
 	getInitialState: function() {
@@ -21,10 +22,6 @@ module.exports = React.createClass({
 	},
 
 	render: function() {	
-		if (this.state.airQuility.now.length > 0) {
-			this.drawLayer();
-		}
-
 		return (
 			<canvas className="canvas" ref="mapCanvas" width={this.props.width} height={this.props.height}></canvas>
 		);
@@ -120,5 +117,15 @@ module.exports = React.createClass({
 
 		this.grayToRGB(ctx, grad);
 	},
+
+	onDrawLayer: function(type) {
+		if (type === AirQuilityStore.type.INIT) {
+			this.setState({airQuility: arguments[1]});
+			this.drawLayer();
+		}
+		else {
+			this.drawLayer();
+		}
+	}
 
 });

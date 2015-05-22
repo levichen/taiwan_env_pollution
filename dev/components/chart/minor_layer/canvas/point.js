@@ -7,28 +7,21 @@ var MoinorLayerStore = require('../../../../stores/MinorLayerStore');
 module.exports = React.createClass({
 
 	mixins: [
-		Reflux.connect(MoinorLayerStore, 'data')
+		// Reflux.connect(MoinorLayerStore)
+		Reflux.listenTo(MoinorLayerStore, 'onDataChange')
 	],
 
 	getInitialState: function() {
-		return {
-			data: []
-		};
+		return {};
 	},
 
 	render: function() {
-		if (this.state.data.length > 0) {
-			this.drawLayer();
-		}
-
 		return (
 			<canvas ref='moinorCanvas' width={this.props.width} height={this.props.height}></canvas>
 		);
 	},
 
-	componentDidMount: function() {
-		Actions.initialMoinorData('incinerators');
-	},
+	componentDidMount: function() {},
 
 	drawLayer: function() {
 		var canvas = this.refs.moinorCanvas.getDOMNode();
@@ -45,13 +38,41 @@ module.exports = React.createClass({
 
 		ctx.clearRect(0, 0, this.props.width, this.props.height);
 		ctx.fillStyle = '#000';
-		for (var i = 0; i < data.length; i++) {
-	        ctx.beginPath();
-			coordinate = projection([data[i].loc.lng, data[i].loc.lat]);
-			ctx.arc(coordinate[0], coordinate[1], 5, 0, 2 * Math.PI, true);
-			ctx.closePath();
-			ctx.fill();
+
+		for (var key in data) {
+			if (data[key] === undefined) {
+				continue;
+			}
+
+			for (var i = 0; i < data[key].length; i++) {
+		        ctx.beginPath();
+				coordinate = projection([data[key][i].loc.lng, data[key][i].loc.lat]);
+				ctx.arc(coordinate[0], coordinate[1], 5, 0, 2 * Math.PI, true);
+				ctx.closePath();
+				ctx.fill();
+			}
 		}
 	},
+
+	onDataChange: function(type) {
+		if (type === MoinorLayerStore.type.CHANGE_SELECT) {
+			var data = {};
+			for (var i = 0; i < arguments[1].length && this.state.data !== undefined; i++) {
+				data[arguments[1][i]] = this.state.data[arguments[1][i]];
+			}
+
+			this.setState({
+				selectedData: arguments[1],
+				data: data
+			});
+		}
+		else {
+			var data = this.state.data || {};
+			data[arguments[1]] = arguments[2];
+			this.setState({data: data});
+		}
+		
+		this.drawLayer();
+	}
 
 });

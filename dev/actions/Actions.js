@@ -6,7 +6,6 @@ var actions = Reflux.createActions([
 	'changeLocation',
 
 	'initialAirQuilityData',
-	'initialMoinorData',
 
 	'navBarSelectedData'
 ]);
