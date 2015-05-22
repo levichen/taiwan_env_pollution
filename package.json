@@ -15,6 +15,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack",
-    "dev": "webpack-dev-server --devtool eval --progress --colors --hot --content-base app"
+    "product": "webpack --config -p webpack.config.js --progress",
+    "dev": "webpack-dev-server --config webpack.dev.config.js --devtool eval --progress --colors --hot --content-base app"
   }
 }

@@ -1,8 +1,11 @@
 var path = require('path');
 var webpack = require('webpack');
 
-module.exports = {
-    entry: path.resolve(__dirname, 'dev/entry.js'),
+var config = {
+    entry: [
+        'webpack/hot/dev-server',
+        path.resolve(__dirname, 'dev/entry.js')
+    ],
     output: {
         path: path.resolve(__dirname, 'app/assets/js/'),
         publicPath: '/assets/js/',
@@ -16,5 +19,11 @@ module.exports = {
             }
         ]
     },
-    externals: {}
+    externals: {
+        // 'react': 'React',
+        // 'd3': 'd3'
+        // 'h337': 'h337'
+    }
 };
+
+module.exports = config;
