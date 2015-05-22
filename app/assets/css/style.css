@@ -170,7 +170,7 @@ span {
 .taipei-map > div > svg, .taipei-map > div > canvas {
     vertical-align: middle;
     display: inline-block;
-    opacity:0.5;
+    /*opacity:0.5;*/
 }
 
 .details {

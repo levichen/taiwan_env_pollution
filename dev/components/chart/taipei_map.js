@@ -4,7 +4,7 @@ var d3 = require('d3');
 
 var Actions = require('../../actions/Actions');
 var MapStore = require('../../stores/MapStore');
-var BubbleChart = require('./canvas/bubble_chart');
+var SubstrateLayer = require('./substrate_layer');
 // var FactoryAirPollution = require('./bubble_chart');
 // var InfoLayer = require('../canvas/bubble_chart');
 
@@ -49,7 +49,7 @@ module.exports = React.createClass({
 		var dom = this.refs.mapCanvas.getDOMNode();
 		var ctx = dom.getContext('2d');
 		React.render(
-			<BubbleChart canvas={dom} ctx={ctx} {...this.state} {...this.props}></BubbleChart>,
+			<SubstrateLayer canvas={dom} ctx={ctx} {...this.state} {...this.props}></SubstrateLayer>,
 			dom
 		);
 	},
@@ -81,8 +81,8 @@ module.exports = React.createClass({
 				.data(taiwan.features)
 				.enter()
 				.append('path')
-				.attr('fill', '#FFFFFF')
-				.attr('stroke', '#C5C5C5')
+				.attr('fill', '#FFF')
+				.attr('stroke', '#000')
 				.attr('storke-width', 1)
 				.attr('d', path)
 				.on('mouseover', function(data, i) {
