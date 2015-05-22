@@ -5,6 +5,7 @@ var d3 = require('d3');
 var Actions = require('../../actions/Actions');
 var MapStore = require('../../stores/MapStore');
 var SubstrateLayer = require('./substrate_layer');
+var MinorLayer = require('./minor_layer/canvas/point');
 // var FactoryAirPollution = require('./bubble_chart');
 // var InfoLayer = require('../canvas/bubble_chart');
 
@@ -27,8 +28,6 @@ module.exports = React.createClass({
 
 	// <FactoryAirPollution projection={this.state.projection}/>
 	render: function() {
-		this.drawMap();
-
 		return (
 			<div id="map" ref="mapContainer" className="taipei-map">
 				<div>
@@ -37,7 +36,13 @@ module.exports = React.createClass({
 					</svg>
 				</div>
 				<div>
-					<canvas width={this.props.width} height={this.props.height} className="canvas" ref="mapCanvas"></canvas>
+					<SubstrateLayer {...this.state} {...this.props}></SubstrateLayer>
+				</div>
+				<div>
+					<SubstrateLayer {...this.state} {...this.props}></SubstrateLayer>
+				</div>
+				<div>
+					<MinorLayer {...this.state} {...this.props}></MinorLayer>
 				</div>
 			</div>
 		);
@@ -45,13 +50,6 @@ module.exports = React.createClass({
 
 	componentDidMount: function() {
 		this.drawMap();
-
-		var dom = this.refs.mapCanvas.getDOMNode();
-		var ctx = dom.getContext('2d');
-		React.render(
-			<SubstrateLayer canvas={dom} ctx={ctx} {...this.state} {...this.props}></SubstrateLayer>,
-			dom
-		);
 	},
 
 	drawMap: function() {

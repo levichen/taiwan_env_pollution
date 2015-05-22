@@ -1,6 +1,8 @@
 var React = require('react');
+var d3 = require('d3');
 var Reflux = require('reflux');
 var AirQuilityStore = require('../../stores/AirQuilityStore');
+var Actions = require('../../actions/Actions');
 
 module.exports = React.createClass({
 
@@ -8,24 +10,35 @@ module.exports = React.createClass({
 		Reflux.connect(AirQuilityStore, 'airQuility')
 	],
 
-	render: function() {
-		var projection = d3.geo.mercator()
-							.scale(this.props.county.scale)
-							.center(this.props.county.center)
-							.translate([this.props.width / 2, this.props.height / 2]);
-		var coordinate;
-		var data = this.state.airQuility.now;
-		var ctx = this.props.ctx;
+	getInitialState: function() {
+		return {
+			radius: 40,
+			blur: 30
+		}
+	},
 
-		// radius
-		var r = 40;
-		var blur = 30;
-		var r2 = r + blur;
+	componentWillMount: function() {
+	},
 
+	render: function() {	
+		if (this.state.airQuility.now.length > 0) {
+			this.drawLayer();
+		}
+
+		return (
+			<canvas className="canvas" ref="mapCanvas" width={this.props.width} height={this.props.height}></canvas>
+		);
+	},
+
+	componentDidMount: function() {
+		Actions.initialAirQuilityData();
+	},
+
+	getGradient: function(canvas, ctx) {
 		// grad
 		var gradient = ctx.createLinearGradient(0, 0, 0, 256);
-		this.props.canvas.width = 1;
-    	this.props.canvas.height = 256;
+		canvas.width = 1;
+    	canvas.height = 256;
 		gradient.addColorStop(0.1, 'blue');
 		gradient.addColorStop(0.2,  'cyan');
 		gradient.addColorStop(0.5, 'lime');
@@ -33,8 +46,11 @@ module.exports = React.createClass({
 		gradient.addColorStop(1, 'red');
 		ctx.fillStyle = gradient;
     	ctx.fillRect(0, 0, 1, 256);
-    	var grad = ctx.getImageData(0, 0, 1, 256).data;
+    	return ctx.getImageData(0, 0, 1, 256).data;
 
+	},
+
+	getMaxValue: function(data) {
 		var max = 0;
 		for (var i = 0; i < data.length; i++) {
 			if (data[i].AirQuility === undefined || data[i].AirQuility['PM2.5'] === undefined)  {
@@ -42,37 +58,10 @@ module.exports = React.createClass({
 			}
 			max = Math.max(max, +data[i].AirQuility['PM2.5']);
 		}
+		return max;
+	},
 
-		this.props.canvas.width = this.props.width;
-    	this.props.canvas.height = this.props.height;
-
-		ctx.clearRect(0, 0, this.props.width, this.props.height);
-		for (var i = 0; i < data.length; i++) {
-			coordinate = projection([data[i].loc.lng, data[i].loc.lat]);
-
-			if (data[i].AirQuility === undefined || data[i].AirQuility['PM2.5'] === undefined)  {
-				continue;
-			}
-
-			var rate = data[i].AirQuility['PM2.5'] / max;
-
-			ctx.shadowOffsetX = this.props.width;
-			ctx.shadowOffsetY = this.props.height;
-	        ctx.shadowBlur = blur;
-	        ctx.shadowColor = 'black';
-	        // var val = Math.round(255 * rate / 3);
-	        // ctx.fillStyle = 'rgba(' + val + ',' + val + ',' + val + ',' + Math.round(rate) + ')';
-	        // ctx.shadowColor = 'rgba(' + val + ',' + val + ',' + val + ',' + Math.round(rate) + ')';
-	        // ctx.globalCompositeOperation = "darker";
-			ctx.globalAlpha = Math.max(rate, 0.1);
-	        ctx.beginPath();
-			ctx.arc(coordinate[0] - this.props.width, coordinate[1] - this.props.height, 
-				r * rate, 0, Math.PI * 2, true);
-			// ctx.arc(coordinate[0], coordinate[1], r * rate, 0, Math.PI * 2, true);
-			ctx.closePath();
-			ctx.fill();
-		}
-
+	grayToRGB: function(ctx, grad) {
 		var colored = ctx.getImageData(0, 0, this.props.width, this.props.height);
 		for (var i = 3, len = colored.data.length, j; i < len; i+=4){
 			j = colored.data[i] * 4;
@@ -84,11 +73,52 @@ module.exports = React.createClass({
 			}
 		}
 		ctx.putImageData(colored, 0, 0);
-
-		return null;
 	},
 
-	componentDidMount: function() {
-	}
+	drawLayer: function() {
+		var canvas = this.refs.mapCanvas.getDOMNode();
+		var ctx = canvas.getContext('2d');
+		var data = this.state.airQuility.now;
+		var coordinate;
+		var projection = d3.geo.mercator()
+							.scale(this.props.county.scale)
+							.center(this.props.county.center)
+							.translate([this.props.width / 2, this.props.height / 2]);
+		
+
+		var grad = this.getGradient(canvas, ctx);
+		var max = this.getMaxValue(data);
+
+		canvas.width = this.props.width;
+    	canvas.height = this.props.height;
+
+		ctx.clearRect(0, 0, this.props.width, this.props.height);
+		for (var i = 0; i < data.length; i++) {
+			if (data[i].AirQuility === undefined || data[i].AirQuility['PM2.5'] === undefined)  {
+				continue;
+			}
+			
+			var rate = data[i].AirQuility['PM2.5'] / max;
+			coordinate = projection([data[i].loc.lng, data[i].loc.lat]);
+
+			ctx.shadowOffsetX = this.props.width;
+			ctx.shadowOffsetY = this.props.height;
+	        ctx.shadowBlur = this.state.blur;
+	        ctx.shadowColor = 'black';
+	        // var val = Math.round(255 * rate / 3);
+	        // ctx.fillStyle = 'rgba(' + val + ',' + val + ',' + val + ',' + Math.round(rate) + ')';
+	        // ctx.shadowColor = 'rgba(' + val + ',' + val + ',' + val + ',' + Math.round(rate) + ')';
+	        // ctx.globalCompositeOperation = "darker";
+			ctx.globalAlpha = Math.max(rate, 0.1);
+	        ctx.beginPath();
+			ctx.arc(coordinate[0] - this.props.width, coordinate[1] - this.props.height, 
+				this.state.radius * rate, 0, Math.PI * 2, true);
+			// ctx.arc(coordinate[0], coordinate[1], this.state.radius * rate, 0, Math.PI * 2, true);
+			ctx.closePath();
+			ctx.fill();
+		}
+
+		this.grayToRGB(ctx, grad);
+	},
 
 });

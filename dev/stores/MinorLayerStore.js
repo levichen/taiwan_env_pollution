@@ -1,27 +1,20 @@
 var Reflux = require('reflux');
-var $ = require('jquery');
 var Actions = require('../actions/Actions');
+var $ = require('jquery');
 
 module.exports = Reflux.createStore({
 
 	listenables: Actions,
 
-	init: function() {},
-
-	getInitialState: function() {
-		return {
-			now: []
-		};
-	},
-
-	onInitialAirQuilityData: function() {
+	onInitialMoinorData: function(type) {
 		var that = this;
 		$.ajax({
 			method: 'GET',
-			url: 'http://ltzuhsiu.org:3333/air_quility/now',
+			url: 'http://ltzuhsiu.org:3333/minordata/' + type,
 			dataType: 'json'
 		}).done(function(data) {
-			that.trigger({ now: data });
+			console.log(data);
+			that.trigger(data);
 		}).fail(function(err, msg) {
 			console.log(msg);
 		});

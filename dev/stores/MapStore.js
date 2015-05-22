@@ -6,8 +6,6 @@ module.exports = Reflux.createStore({
 	listenables: Actions,
 
 	init: function() {
-		this.listen
-
 		this.county = 0;
 		this.metadata = {
 			'0': {

@@ -1,5 +1,5 @@
 var React = require('react');
-var TaipeiMap = require('./taipei_map');
+var Map = require('./map');
 var MapLegend = require('./map_legend');
 var Details = require('./details');
 var mapWidth, mapHeight;
@@ -27,7 +27,7 @@ var Content = React.createClass({
 			<div className="container-content center">
 				<div className='content-box'>
 					<MapLegend width={mapLegendWidth} domain={mapLegendDomain} range={mapLegendRange}/>
-					<TaipeiMap width={mapWidth} height={mapHeight} />
+					<Map width={mapWidth} height={mapHeight} />
 					<Details></Details>
 				</div>
 				<div className={content_bg} />
