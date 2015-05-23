@@ -60,7 +60,6 @@ module.exports = Reflux.createStore({
 
 	onNavBarSelectSubtrate: function(selectedData, beforeData) {
 		var isFound;
-
 		for (var i = 0; i < selectedData.length; i++) {
 			isFound = false;
 			for (var j = 0; j < beforeData.length; j++) {

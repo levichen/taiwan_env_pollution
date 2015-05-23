@@ -9,16 +9,15 @@ module.exports = React.createClass({
 
 	componentDidMount: function() {
 		var svg = d3.select(React.findDOMNode(this.refs.maplegend));
-		var color = d3.scale.ordinal().domain(this.props.domain).range(this.props.range);
+		var color = d3.scale.linear().domain([0].concat(this.props.domain)).range(['blue', 'cyan', 'lime', 'yellow', 'red']);
 
 		for (var i = 0; i < this.props.domain.length; i++) {
 			var g = svg.append('g');
-
 			g.append('rect')
 				.attr('y', i * 40)
 				.attr('width', '40px')
 				.attr('height', '40px')
-				.attr('fill', color(this.props.range[i]))
+				.attr('fill', color(this.props.domain[i]))
 				.attr('storke', '#FFFFFF')
 				.attr('storke-width', '0.5');
 

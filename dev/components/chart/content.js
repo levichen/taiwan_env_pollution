@@ -12,8 +12,8 @@ var Content = React.createClass({
 		mapHeight = 600;	
 	},
 	initMapLegendArgs: function() {
-		mapLegendDomain = [50, 100, 150, 200, 300, 500];
-		mapLegendRange = ['#3CB371', '#FFCC22', '#FF8800', '#E63F00', '#CC0000', '#8C0044'];
+		mapLegendDomain = [50, 150, 350, 420];
+		// mapLegendRange = ['#3CB371', '#FFCC22', '#FF8800', '#E63F00', '#CC0000', '#8C0044'];
 		mapLegendWidth = 100;
 	},
 	componentWillMount: function() {
@@ -26,7 +26,7 @@ var Content = React.createClass({
 		return (
 			<div className="container-content center">
 				<div className='content-box'>
-					<MapLegend width={mapLegendWidth} domain={mapLegendDomain} range={mapLegendRange}/>
+					<MapLegend width={mapLegendWidth} domain={mapLegendDomain}/>
 					<Map width={mapWidth} height={mapHeight} />
 					<Details></Details>
 				</div>

@@ -76,6 +76,10 @@ module.exports = React.createClass({
 	},
 
 	drawLayer: function() {
+		if (this.state.airQuility === undefined) {
+			return;
+		}
+
 		var canvas = this.refs.mapCanvas.getDOMNode();
 		//console.log(d3.select(this.refs.svg.getDomNode()));
 		var ctx = canvas.getContext('2d');

@@ -1,6 +1,6 @@
 var Reflux = require('reflux');
 var Actions = require('../actions/Actions');
-var $ = require('jQuery');
+var $ = require('jquery');
 var SearchStore = Reflux.createStore({
 	listenables: Actions,
 	init: function() {

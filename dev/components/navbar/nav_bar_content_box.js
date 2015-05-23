@@ -24,7 +24,7 @@ var NavBarContentBox = React.createClass({
                   substrate.push(checkedValue[j].defaultValue);
                 }
               }
-
+              
               Actions.navBarSelectedData(minor, that.state.minor);
               Actions.navBarSelectSubtrate(substrate, that.state.substrate);
               that.setState({

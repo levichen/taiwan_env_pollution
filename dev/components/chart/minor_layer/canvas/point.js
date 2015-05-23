@@ -98,6 +98,7 @@ module.exports = React.createClass({
 							.center(this.props.county.center)
 							.translate([x, y]);
 
+		var airPollutionType = 'VOCs';
 		ctx.globalCompositeOperation = 'darken';
 		for (var key in data) {
 			if (data[key] === undefined) {
@@ -106,15 +107,13 @@ module.exports = React.createClass({
 
 			var max = 0, min = 100000;
 			for (var i = 0; i < data[key].length; i++) {
-				var val = +data[key][i].SOx;
+				var val = +data[key][i][airPollutionType];
 				if (val == 0) {
 					continue;
 				}
 				max = Math.max(max, val);
 			}
 
-
-			var airPollutionType = 'VOCs';
 			ctx.fillStyle = 'rgba(64, 192, 160, 1)';
 			for (var i = 0; i < data[key].length; i++) {
 				var val = +data[key][i][airPollutionType];
@@ -159,17 +158,18 @@ module.exports = React.createClass({
 			data[arguments[1]] = arguments[2];
 			this.setState({data: data});
 		}
-		else if (type === MoinorLayerStore.type.CHANGE_SELECT_SUBSTRATEDATA) {
+		else if (type === MoinorLayerStore.type.CHANGE_SELECT_SUBSTRATEDATA) {			
 			var data = {};
 			for (var i = 0; i < arguments[1].length  && this.state.selectedSubstrateData !== undefined; i++) {
-				data[arguments[1][i]] = arguments[1][i];
+				data[arguments[1][i]] = this.state.substrateData[arguments[1][i]];
 			}
+
 			this.setState({
 				selectedSubstrateData: arguments[1],
 				substrateData: data
 			});
 		}
-		else {
+		else if (type === MoinorLayerStore.type.UPDATE_SUBSTRATE_DATA) {
 			var data = this.state.substrateData || {};
 			data[arguments[1]] = arguments[2];
 			this.setState({ substrateData: data });
