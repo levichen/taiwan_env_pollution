@@ -1,9 +1,11 @@
 var React = require('react');
+var Reflux = require('reflux');
 var d3 = require('d3');
+var DetailStore = require('../../stores/DetailStore');
 var BrokenLineChart = require('./broken_line_chart');
 
 module.exports = React.createClass({
-
+	mixins: [Reflux.connect(DetailStore)],
 	getInitialState: function() {
 		return {
 			data: []
@@ -19,20 +21,7 @@ module.exports = React.createClass({
 		// 	}
 		// }.bind(this));
 
-		var dummyData = [
-			{name: '松山區', data: []},
-			{name: '信義區', data: []},
-			{name: '大安區', data: []},
-			{name: '中山區', data: []},
-			{name: '中正區', data: []},
-			{name: '大同區', data: []},
-			{name: '萬華區', data: []},
-			{name: '文山區', data: []},
-			{name: '南港區', data: []},
-			{name: '內湖區', data: []},
-			{name: '士林區', data: []},
-			{name: '北投區', data: []}
-		];
+		var dummyData = this.state.dummyData;
 
 		for (var i = 0; i < dummyData.length; i++) {
 			for (var j = 0; j < 100; j++) {
