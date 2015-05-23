@@ -2,7 +2,14 @@ var React = require('react');
 var Actions = require('../../actions/Actions');
 
 var NavBarContentBox = React.createClass({	
+  getInitialState: function() {
+    return {
+      minor: [],
+      substrate: []
+    }
+  },
 	componentDidMount: function() {
+    var that = this;
 		var checkboxs = React.findDOMNode(this.refs.optionSelect).querySelectorAll('input[type=checkbox]');
 		for (var i in checkboxs) {
 			checkboxs[i].onchange = function() {
@@ -17,8 +24,13 @@ var NavBarContentBox = React.createClass({
                   substrate.push(checkedValue[j].defaultValue);
                 }
               }
-              Actions.navBarSelectedData(minor);
-              Actions.navBarSelectSubtrate(substrate);
+
+              Actions.navBarSelectedData(minor, that.state.minor);
+              Actions.navBarSelectSubtrate(substrate, that.state.substrate);
+              that.setState({
+                minor: minor,
+                substrate: substrate
+              });
         	};
 		}
     },

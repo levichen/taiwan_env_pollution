@@ -40,16 +40,38 @@ module.exports = Reflux.createStore({
 		});
 	},
 
-	onNavBarSelectedData: function(selectedData) {
+	onNavBarSelectedData: function(selectedData, beforeData) {
+		var isFound;
+
 		for (var i = 0; i < selectedData.length; i++) {
-			this.getMinorData(selectedData[i]);
+			isFound = false;
+			for (var j = 0; j < beforeData.length; j++) {
+				if (selectedData[i] === beforeData[j]) {
+					isFound = true;
+					break;
+				}
+			}
+			if (!isFound) {
+				this.getMinorData(selectedData[i]);
+			}
 		}
 		this.trigger(this.type.CHANGE_SELECT, selectedData);
 	},
 
-	onNavBarSelectSubtrate: function(selectedData) {
+	onNavBarSelectSubtrate: function(selectedData, beforeData) {
+		var isFound;
+
 		for (var i = 0; i < selectedData.length; i++) {
-			this.getSubstrateData(selectedData[i]);
+			isFound = false;
+			for (var j = 0; j < beforeData.length; j++) {
+				if (selectedData[i] === beforeData[j]) {
+					isFound = true;
+					break;
+				}
+			}
+			if (!isFound) {
+				this.getSubstrateData(selectedData[i]);
+			}
 		}
 		this.trigger(this.type.CHANGE_SELECT_SUBSTRATEDATA, selectedData);
 	},
