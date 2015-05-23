@@ -306,3 +306,30 @@ span {
 #div-svg {
     z-index: 9;
 }
+
+#search-content {
+    position: absolute;
+    left: 15%;
+    top: 20%;
+    z-index: 20;
+    width: 1024px;
+    height: 300px;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.searchDialog-enter {
+  opacity: 0.01;
+  transition: opacity .5s ease-in;
+}
+
+.searchDialog-enter.searchDialog-enter-active {
+  opacity: 1;
+}
+.searchDialog-leave {
+  opacity: 1;
+  transition: opacity .5s ease-in;
+}
+
+.searchDialog-leave.searchDialog-leave-active {
+  opacity: 0.01;
+}
