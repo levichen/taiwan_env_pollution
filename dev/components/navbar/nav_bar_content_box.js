@@ -7,15 +7,23 @@ var NavBarContentBox = React.createClass({
 		for (var i in checkboxs) {
 			checkboxs[i].onchange = function() {
             	var checkedValue = document.querySelectorAll('.nav-options:checked');
-            	var val = [];
+            	var minor = [], substrate = [];
+
               for (var j=0; j < checkedValue.length; j++) {
-                val.push(checkedValue[j].defaultValue);
+                if (checkedValue[j].getAttribute('data') === '2') {
+                  minor.push(checkedValue[j].defaultValue);
+                }
+                else if (checkedValue[j].getAttribute('data') === '1') {
+                  substrate.push(checkedValue[j].defaultValue);
+                }
               }
-              Actions.navBarSelectedData(val);
+              Actions.navBarSelectedData(minor);
+              Actions.navBarSelectSubtrate(substrate);
         	};
 		}
     },
     renderBox: function() {
+        var dataType = this.props.listType;
         var box = this.props.listSub.map(function(subData) {
             var style = {
               background: subData.sub_color
@@ -25,7 +33,7 @@ var NavBarContentBox = React.createClass({
                   <div className="nav-box-color"><div style={style} /></div>
                   <div className="nav-box-sub-title">{subData.sub_title}</div>
                   <div className="nav-box-sub-checkbox center">
-                     <input type="checkbox" className="nav-options" value={subData.sub_id} />
+                     <input type="checkbox" className="nav-options" data={dataType} value={subData.sub_id} />
                   </div>
                 </div>
             );

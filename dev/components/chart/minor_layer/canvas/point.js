@@ -25,7 +25,7 @@ module.exports = React.createClass({
 
 	componentDidMount: function() {},
 
-	drawLayer: function() {
+	drawPoint: function() {
 		var canvas = this.refs.moinorCanvas.getDOMNode();
 		var ctx = canvas.getContext('2d');
 		var data = this.state.data;
@@ -48,14 +48,22 @@ module.exports = React.createClass({
 			"petition": "#66304E"
 		};
 
-		canvas.width = this.props.width;
-    	canvas.height = this.props.height;
+		ctx.globalCompositeOperation = 'darken';
 
-		ctx.clearRect(0, 0, this.props.width, this.props.height);
-		
+		if (data['petition'] !== undefined) {
+			ctx.fillStyle = "#66304E";
+			for (var i = 0; i < data['petition'].length; i++) {
+		        ctx.beginPath();
+				coordinate = projection([data['petition'][i].loc.lng, data['petition'][i].loc.lat]);
+				ctx.arc(coordinate[0], coordinate[1], 1, 0, 2 * Math.PI, true);
+				ctx.closePath();
+				ctx.fill();
+			}
+		}
+
 		for (var key in data) {
 			ctx.fillStyle = drawColor[key];
-			if (data[key] === undefined) {
+			if (key === 'petition' || data[key] === undefined) {
 				continue;
 			}
 
@@ -68,10 +76,64 @@ module.exports = React.createClass({
 			}
 		}
 	},
+
 	onMapChange: function(id, name, translate, scale) {
 		this.setState({translate: translate, scale: scale})
 		this.drawLayer();
 	},
+
+	drawCircle: function() {
+		var canvas = this.refs.moinorCanvas.getDOMNode();
+		var ctx = canvas.getContext('2d');
+		var data = this.state.substrateData;
+		var coordinate;
+		var projection = d3.geo.mercator()
+							.scale(this.props.county.scale)
+							.center(this.props.county.center)
+							.translate([this.props.width / 2, this.props.height / 2]);
+
+		ctx.globalCompositeOperation = 'darken';
+		for (var key in data) {
+			if (data[key] === undefined) {
+				continue;
+			}
+
+			var max = 0, min = 100000;
+			for (var i = 0; i < data[key].length; i++) {
+				var val = +data[key][i].SOx;
+				if (val == 0) {
+					continue;
+				}
+				max = Math.max(max, val);
+			}
+
+			ctx.fillStyle = 'rgba(200, 0, 0, 0.5)';
+			for (var i = 0; i < data[key].length; i++) {
+				var val = +data[key][i].SOx;
+				if (val === 0 || data[key][i].loc === undefined) {
+					continue;
+				}
+				var rate = Math.max(val / max, 0.1);
+				ctx.beginPath();
+				coordinate = projection([data[key][i].loc.lng, data[key][i].loc.lat]);
+				ctx.arc(coordinate[0], coordinate[1], 50 * rate, 0, 2 * Math.PI, true);
+				ctx.closePath();
+				ctx.fill();
+			}
+		}
+	},
+
+	drawLayer: function() {
+		var canvas = this.refs.moinorCanvas.getDOMNode();
+		ctx = canvas.getContext('2d');
+		canvas.width = this.props.width;
+    	canvas.height = this.props.height;
+		ctx.clearRect(0, 0, this.props.width, this.props.height);
+
+		this.drawCircle();
+		this.drawPoint();
+	},
+
 	onDraw: function(type) {
 		if (type === MoinorLayerStore.type.CHANGE_SELECT) {
 			var data = {};
@@ -88,6 +150,21 @@ module.exports = React.createClass({
 			var data = this.state.data || {};
 			data[arguments[1]] = arguments[2];
 			this.setState({data: data});
+		}
+		else if (type === MoinorLayerStore.type.CHANGE_SELECT_SUBSTRATEDATA) {
+			var data = {};
+			for (var i = 0; i < arguments[1].length  && this.state.selectedSubstrateData !== undefined; i++) {
+				data[arguments[1][i]] = arguments[1][i];
+			}
+			this.setState({
+				selectedSubstrateData: arguments[1],
+				substrateData: data
+			});
+		}
+		else {
+			var data = this.state.substrateData || {};
+			data[arguments[1]] = arguments[2];
+			this.setState({ substrateData: data });
 		}
 		
 		this.drawLayer();

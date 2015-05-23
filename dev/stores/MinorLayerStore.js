@@ -9,10 +9,12 @@ module.exports = Reflux.createStore({
 	type: {
 		CHANGE_SELECT: 0,
 		UPDATE_DATA: 1,
-		REDRAW: 2
+		REDRAW: 2,
+		CHANGE_SELECT_SUBSTRATEDATA: 3,
+		UPDATE_SUBSTRATE_DATA: 4
 	},
 
-	getData: function(type) {
+	getMinorData: function(type) {
 		var that = this;
 		$.ajax({
 			method: 'GET',
@@ -25,11 +27,31 @@ module.exports = Reflux.createStore({
 		});
 	},
 
+	getSubstrateData: function(type) {
+		var that = this;
+		$.ajax({
+			method: 'GET',
+			url: 'http://ltzuhsiu.org:3333/air_quility/factory_pollution_report',
+			dataType: 'json'
+		}).done(function(data) {
+			that.trigger(that.type.UPDATE_SUBSTRATE_DATA, type, data);
+		}).fail(function(err, msg) {
+			console.log(msg);
+		});
+	},
+
 	onNavBarSelectedData: function(selectedData) {
 		for (var i = 0; i < selectedData.length; i++) {
-			this.getData(selectedData[i]);
+			this.getMinorData(selectedData[i]);
 		}
 		this.trigger(this.type.CHANGE_SELECT, selectedData);
+	},
+
+	onNavBarSelectSubtrate: function(selectedData) {
+		for (var i = 0; i < selectedData.length; i++) {
+			this.getSubstrateData(selectedData[i]);
+		}
+		this.trigger(this.type.CHANGE_SELECT_SUBSTRATEDATA, selectedData);
 	},
 
 	onChangeLocation: function() {
