@@ -196,6 +196,7 @@ module.exports = React.createClass({
 				})
 				.on('mousedown', function(data, i) {
 					Actions.changeLocation(data.properties.County_ID, data.properties.C_Name);
+					Actions.changeContentTitle(data.properties.C_Name)
 				});
 		});
 	},
