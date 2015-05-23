@@ -12,7 +12,8 @@ var actions = Reflux.createActions([
 	'navBarSelectedData',
 	'navBarSelectSubtrate',
 
-	'doSearch'
+	'doSearch',
+	'closeSearchContent'
 ]);
 
 module.exports = actions;

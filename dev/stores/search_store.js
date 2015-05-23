@@ -29,6 +29,9 @@ var SearchStore = Reflux.createStore({
 		}).fail(function(err, msg) {
 			console.log(msg);
 		});
+	},
+	onCloseSearchContent: function() {
+		this.trigger({enabled: false});
 	}
 });
 

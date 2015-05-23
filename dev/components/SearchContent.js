@@ -1,10 +1,18 @@
 var React = require('react');
 var Reflux = require('reflux');
+var Actions = require('../actions/Actions');
 var SearchStore = require('../stores/search_store');
 
 var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 
 var SearchDetail = React.createClass({
+	componentDidMount: function() {
+        var closeContent = React.findDOMNode(this.refs.close);
+				
+        closeContent.addEventListener('click', function() {
+			Actions.closeSearchContent();
+        });
+    },
 	render: function() {
 		var result = this.props.result;
 		var rows = [];
@@ -20,6 +28,7 @@ var SearchDetail = React.createClass({
 		}
 		return (
 			<div id="search-content">
+			<div className="closeSearch" ref="close">X</div>
 			<table >
 				<thead>
 					<tr>

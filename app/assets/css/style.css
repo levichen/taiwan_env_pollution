@@ -328,6 +328,14 @@ span {
 #search-content td {
 	text-align:center;
 }
+.closeSearch {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    color: #FFF;
+    font-size: 1em;
+    cursor: pointer;
+}
 
 .searchDialog-enter {
   opacity: 0.01;
