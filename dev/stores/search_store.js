@@ -18,12 +18,12 @@ var SearchStore = Reflux.createStore({
 			url: 'http://ltzuhsiu.org:3333/searchAddr/?addr=' + keyword,
 			dataType: 'json'
 		}).done(function(data) {
-			if(data.length == 0) {
+			if(data.feed.length == 0) {
 				return alert('查無資料');
 			}
 			var data = {
 				enabled: true,
-				result: data
+				result: data.feed
 			};
 			that.trigger(data);
 		}).fail(function(err, msg) {
