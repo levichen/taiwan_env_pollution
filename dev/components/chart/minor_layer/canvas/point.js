@@ -87,10 +87,16 @@ module.exports = React.createClass({
 		var ctx = canvas.getContext('2d');
 		var data = this.state.substrateData;
 		var coordinate;
+		var x = this.props.width / 2;
+		var y = this.props.height / 2;
+		if(this.state.translate) {
+			x = this.state.translate[0];
+			y = this.state.translate[1];
+		}
 		var projection = d3.geo.mercator()
-							.scale(this.props.county.scale)
+							.scale(this.state.scale || this.props.county.scale)
 							.center(this.props.county.center)
-							.translate([this.props.width / 2, this.props.height / 2]);
+							.translate([x, y]);
 
 		ctx.globalCompositeOperation = 'darken';
 		for (var key in data) {

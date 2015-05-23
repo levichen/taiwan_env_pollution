@@ -8,7 +8,7 @@ var actions = Reflux.createActions([
 	'changeContentTitle',
 
 	'initialAirQuilityData',
-
+	
 	'navBarSelectedData',
 	'navBarSelectSubtrate',
 

@@ -5,18 +5,23 @@ var Actions = require('../actions/Actions');
 var NavBarContentBox = require('./navbar/nav_bar_content_box');
 
 var NavBarContent = React.createClass({
+
     
     componentDidMount: function() {
         var navbar = React.findDOMNode(this.refs.navDisplay);
+				var timer;
         navbar.addEventListener('mouseover', function() {
+						clearTimeout(timer);
             if(navbar.classList.contains("nav-hide")) {
                 navbar.classList.remove("nav-hide");
             }
         });
         navbar.addEventListener('mouseout', function() {
-            if(!navbar.classList.contains("nav-hide")) {
-                navbar.classList.add("nav-hide");
-            }
+						timer = setTimeout(function() {
+							if(!navbar.classList.contains("nav-hide")) {
+									navbar.classList.add("nav-hide");
+							}	
+						}, 500);
         });
 
         this.refs.searchClick.getDOMNode().addEventListener('click', function() {
