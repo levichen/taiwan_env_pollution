@@ -2,13 +2,15 @@ var React = require('react');
 var d3 = require('d3');
 var Reflux = require('reflux');
 var AirQuilityStore = require('../../stores/AirQuilityStore');
+var MapStore = require('../../stores/MapStore');
 var Actions = require('../../actions/Actions');
 
 module.exports = React.createClass({
 
 	mixins: [
 		// Reflux.connect(AirQuilityStore, 'airQuility')
-		Reflux.listenTo(AirQuilityStore, 'onDrawLayer')
+		Reflux.listenTo(AirQuilityStore, 'onDrawLayer'),
+		Reflux.listenTo(MapStore, 'onMapChange')
 	],
 
 	getInitialState: function() {
@@ -74,20 +76,28 @@ module.exports = React.createClass({
 
 	drawLayer: function() {
 		var canvas = this.refs.mapCanvas.getDOMNode();
+		//console.log(d3.select(this.refs.svg.getDomNode()));
 		var ctx = canvas.getContext('2d');
 		var data = this.state.airQuility.now;
 		var coordinate;
+		var x = this.props.width / 2;
+		var y = this.props.height / 2;
+		if(this.state.translate) {
+			console.log(this.state.translate);
+			x = this.state.translate[0];
+			y = this.state.translate[1];
+		}
 		var projection = d3.geo.mercator()
-							.scale(this.props.county.scale)
+							.scale(this.state.scale || this.props.county.scale)
 							.center(this.props.county.center)
-							.translate([this.props.width / 2, this.props.height / 2]);
-		
+							.translate([x, y]);
+			
 
 		var grad = this.getGradient(canvas, ctx);
 		var max = this.getMaxValue(data);
 
 		canvas.width = this.props.width;
-    	canvas.height = this.props.height;
+		canvas.height = this.props.height;
 
 		ctx.clearRect(0, 0, this.props.width, this.props.height);
 		for (var i = 0; i < data.length; i++) {
@@ -117,13 +127,21 @@ module.exports = React.createClass({
 
 		this.grayToRGB(ctx, grad);
 	},
-
+	onMapChange: function(id, name, translate, scale) {
+		var that = this;
+		this.setState({translate: translate, scale: scale})
+		clearTimeout(this.timer);
+		this.timer = setTimeout(function() {
+			that.drawLayer();
+		}, 100);
+	},
 	onDrawLayer: function(type) {
 		if (type === AirQuilityStore.type.INIT) {
 			this.setState({airQuility: arguments[1]});
 			this.drawLayer();
 		}
 		else {
+			console.log('drawlayer');
 			this.drawLayer();
 		}
 	}

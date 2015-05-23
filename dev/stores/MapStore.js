@@ -14,7 +14,9 @@ module.exports = Reflux.createStore({
 	// 		cName: '',
 	// 	};
 	// },
-
+	onZoom: function(translate, scale) {
+		this.trigger(null, null, translate, scale);
+	},
 	onChangeLocation: function(countyId, cName) {
 		this.trigger(countyId, cName);
 	}

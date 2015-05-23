@@ -12,8 +12,7 @@ var MinorLayer = require('./minor_layer/canvas/point');
 module.exports = React.createClass({
 
 	mixins: [
-		// Reflux.connect(MapStore, 'county')
-		Reflux.listenTo(MapStore, 'onChangeCounty')
+		Reflux.listenTo(MapStore, 'onChange')
 	],
 
 	metadata: {
@@ -110,10 +109,6 @@ module.exports = React.createClass({
 			center: [119.9, 26.15] 
 		}
 	},
-
-	init: function() {
-	},
-
 	getInitialState: function() {
 		var initCounty = 0;
 		return {
@@ -130,6 +125,8 @@ module.exports = React.createClass({
 	},
 
 	componentWillmount: function() {
+		this.listenTo(Actions.zoom, this.onZoom);
+		this.listenTo(Actions.changeCounty, this.onCounty);
 		// TODO
 	},
 
@@ -169,12 +166,17 @@ module.exports = React.createClass({
 			if (err) {
 				return 'error';
 			}
-			map.call(d3.behavior.zoom().scaleExtent([0.3, 8]).on("zoom", function() {
-				var scale = d3.event.scale;
-				console.log(scale);
-				taipeiMap.attr("transform", "translate(" + d3.event.translate + ")scale(" + scale + ")");
-			}));
-
+			var zoom = d3.behavior.zoom()
+				.translate(projection.translate())
+				.scaleExtent([projection.scale()/2, projection.scale()*5])
+				.scale(projection.scale())
+				.on("zoom", function() {
+					var scale = d3.event.scale;
+					projection.translate(d3.event.translate).scale(d3.event.scale);
+					taipeiMap.selectAll("path").attr("d", path);
+					Actions.zoom(d3.event.translate, d3.event.scale);
+				});
+			map.call(zoom);
 			taipeiMap.selectAll('path')
 				.data(taiwan.features)
 				.enter()
@@ -193,27 +195,39 @@ module.exports = React.createClass({
 				.on('mouseover', function(data, i) {
 					// console.log('mouseover');
 				})
-				
 				.on('mouseout', function(data, i) {
 					// console.log('mouseout');
 				})
 				.on('contextmenu', function() {
 					d3.event.preventDefault();
+					Actions.changeLocation(0, '台灣環境汙染圖');
+					contentTitle = "台灣環境汙染圖";
+					Actions.changeContentTitle(contentTitle)
+				})
+				.on('mouseup', function(data, i) {
 				})
 				.on('mousedown', function(data, i) {
-					var contentTitle = data.properties.C_Name;
-					if(d3.event.button == 0)
-						Actions.changeLocation(data.properties.County_ID, contentTitle);
-					else if(d3.event.button == 2) {
-						Actions.changeLocation(0, '');
-						contentTitle = "台灣環境汙染圖";
-					}
-					Actions.changeContentTitle(contentTitle)
 				});
+			taipeiMap.selectAll('path')
+			.on('click', function(data, i) {
+				if (d3.event.defaultPrevented) return;
+				var contentTitle = data.properties.C_Name;
+				Actions.changeLocation(data.properties.County_ID, contentTitle);
+				Actions.changeContentTitle(contentTitle)
+			});
 		});
 	},
-
-	onChangeCounty: function(countyId, cName, scale) {
+	onZoom: function(translate, scale) {
+	},
+	onChange: function(id, name, translate, scale) {
+		if(id !== null && name !== null) {
+			this.onChangeCounty(id, name);
+		}
+		else {
+			this.onZoom(translate, scale);
+		}
+	},
+	onChangeCounty: function(countyId, cName, zoom) {
 		var map = d3.select(React.findDOMNode(this.refs.map).parentNode);
 		var taipeiMap = map.select('g');
 		if(countyId == this.state.county.id)
@@ -222,7 +236,7 @@ module.exports = React.createClass({
 			county: {
 				geojson: countyId === 0 ? 'assets/geojson/country.json' : 'assets/geojson/twonship.json',
 				id: countyId,
-				scale: scale || this.metadata[countyId].scale,
+				scale: this.metadata[countyId].scale,
 				center: this.metadata[countyId].center,
 				cName: cName,
 			}
