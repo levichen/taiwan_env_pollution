@@ -164,14 +164,19 @@ module.exports = React.createClass({
 							.center(this.state.county.center)
 							.translate([this.props.width / 2, this.props.height / 2]);
 		var path = d3.geo.path().projection(projection);
+		var map = d3.select(React.findDOMNode(this.refs.map).parentNode);
 		var taipeiMap = d3.select(React.findDOMNode(this.refs.map));
 		var that = this;
-
 		taipeiMap.selectAll('path').remove();
 		d3.json(this.state.county.geojson, function(err, taiwan) {
 			if (err) {
 				return 'error';
 			}
+			map.call(d3.behavior.zoom().scaleExtent([0.3, 8]).on("zoom", function() {
+				var scale = d3.event.scale;
+				console.log(scale);
+				taipeiMap.attr("transform", "translate(" + d3.event.translate + ")scale(" + scale + ")");
+			}));
 
 			taipeiMap.selectAll('path')
 				.data(taiwan.features)
@@ -191,25 +196,37 @@ module.exports = React.createClass({
 				.on('mouseover', function(data, i) {
 					// console.log('mouseover');
 				})
+				
 				.on('mouseout', function(data, i) {
 					// console.log('mouseout');
 				})
+				.on('contextmenu', function() {
+					d3.event.preventDefault();
+				})
 				.on('mousedown', function(data, i) {
-					Actions.changeLocation(data.properties.County_ID, data.properties.C_Name);
+					if(d3.event.button == 0)
+						Actions.changeLocation(data.properties.County_ID, data.properties.C_Name);
+					else if(d3.event.button == 2)
+						Actions.changeLocation(0, '');
 				});
 		});
 	},
 
-	onChangeCounty: function(countyId, cName) {
+	onChangeCounty: function(countyId, cName, scale) {
+		var map = d3.select(React.findDOMNode(this.refs.map).parentNode);
+		var taipeiMap = map.select('g');
+		if(countyId == this.state.county.id)
+			return;
 		this.setState({
 			county: {
 				geojson: countyId === 0 ? 'assets/geojson/country.json' : 'assets/geojson/twonship.json',
 				id: countyId,
-				scale: this.metadata[countyId].scale,
+				scale: scale || this.metadata[countyId].scale,
 				center: this.metadata[countyId].center,
 				cName: cName,
 			}
 		});
+		taipeiMap.attr("transform", "");
 		this.drawMap();
 	}
 

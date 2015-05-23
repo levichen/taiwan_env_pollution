@@ -60,7 +60,7 @@ module.exports = React.createClass({
 			<div ref="details" className="details">
 				<div id="head">
 					<div id="name">Name</div>
-					<div id="digram">Digram</div>
+					<div id="digram">Diagram</div>
 				</div>
 				<div id="content">{items}</div>
 			</div>
