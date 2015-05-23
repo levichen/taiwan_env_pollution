@@ -208,6 +208,7 @@ module.exports = React.createClass({
 						Actions.changeLocation(data.properties.County_ID, data.properties.C_Name);
 					else if(d3.event.button == 2)
 						Actions.changeLocation(0, '');
+					Actions.changeContentTitle(data.properties.C_Name)
 				});
 		});
 	},

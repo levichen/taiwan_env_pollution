@@ -32,14 +32,20 @@ module.exports = React.createClass({
 							.scale(this.props.county.scale)
 							.center(this.props.county.center)
 							.translate([this.props.width / 2, this.props.height / 2]);
+		var drawColor = {
+			"incinerators": "#88342B",
+			"garbage": "#5864E7",
+			"airstation": "#2D7679",
+			"petition": "#66304E"
+		};
 
 		canvas.width = this.props.width;
     	canvas.height = this.props.height;
 
 		ctx.clearRect(0, 0, this.props.width, this.props.height);
-		ctx.fillStyle = '#000';
-
+		
 		for (var key in data) {
+			ctx.fillStyle = drawColor[key];
 			if (data[key] === undefined) {
 				continue;
 			}

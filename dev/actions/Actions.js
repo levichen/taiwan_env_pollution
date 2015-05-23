@@ -4,6 +4,7 @@ var actions = Reflux.createActions([
 	'initNavList',
 
 	'changeLocation',
+	'changeContentTitle',
 
 	'initialAirQuilityData',
 

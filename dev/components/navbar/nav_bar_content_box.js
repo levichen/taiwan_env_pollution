@@ -17,8 +17,12 @@ var NavBarContentBox = React.createClass({
     },
     renderBox: function() {
         var box = this.props.listSub.map(function(subData) {
+            var style = {
+              background: subData.sub_color
+            };
             return (
                 <div className="nav-box-content">
+                  <div className="nav-box-color"><div style={style} /></div>
                   <div className="nav-box-sub-title">{subData.sub_title}</div>
                   <div className="nav-box-sub-checkbox center">
                      <input type="checkbox" className="nav-options" value={subData.sub_id} />

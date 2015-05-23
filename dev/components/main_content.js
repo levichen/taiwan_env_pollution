@@ -1,13 +1,12 @@
 var React = require('react');
 var Reflux = require('reflux');
+var MainContentStore = require('../stores/MainContentStore');
 var Content = require('./chart/content');
 
 var MainContent = React.createClass({
-
+	mixins: [Reflux.connect(MainContentStore)],
 	render: function() {
-		// var props = this.props;
-		// var title = this.props.title;
-		var title = "台灣環境汙染圖"
+		var title = this.state.contentTitle;
 		return (
 			<div id="container">
 				<div className="content-title"><span>{title}</span></div>
