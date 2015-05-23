@@ -176,7 +176,9 @@ module.exports = React.createClass({
 					taipeiMap.selectAll("path").attr("d", path);
 					clearTimeout(that.timer);
 					that.timer = setTimeout((function(translate, scale) {
-						Actions.zoom(translate, scale);
+						return function() {
+							Actions.zoom(translate, scale);
+						};
 					})(d3.event.translate, d3.event.scale), 30);
 				});
 			map.call(zoom);
