@@ -145,9 +145,6 @@ module.exports = React.createClass({
 					<SubstrateLayer {...this.state} {...this.props}></SubstrateLayer>
 				</div>
 				<div>
-					<SubstrateLayer {...this.state} {...this.props}></SubstrateLayer>
-				</div>
-				<div>
 					<MinorLayer {...this.state} {...this.props}></MinorLayer>
 				</div>
 			</div>
