@@ -18,7 +18,7 @@ var SearchDetail = React.createClass({
 		var rows = [];
 		for(var i in result) {
 			var row = result[i];
-			var type = {Petition: '陳情', FAPReport: '工廠', Incinerators: '焚化爐', Garbage: '垃圾場' , Airstation: '空氣監控站'}[row.type];
+			var type = {Petition: '陳情資料', FAPReport: '工廠位置', Incinerators: '焚化爐', Garbage: '垃圾場' , Airstation: '空氣監控站'}[row.type];
 			rows.push(
 				<tr>
 					<td>{type}</td>
