@@ -33,6 +33,7 @@ module.exports = React.createClass({
 							.center(this.props.county.center)
 							.translate([this.props.width / 2, this.props.height / 2]);
 		var drawColor = {
+			"incinerators": "#88342B",
 			"garbage": "#5864E7",
 			"airstation": "#2D7679",
 			"petition": "#66304E"
