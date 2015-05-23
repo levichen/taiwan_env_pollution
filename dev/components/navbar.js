@@ -21,7 +21,7 @@ var NavBarContent = React.createClass({
 
         this.refs.searchClick.getDOMNode().addEventListener('click', function() {
             var search_val = document.getElementById("search-val").value;
-            /* call action */
+            Actions.doSearch(search_val);
         });
     },
     renderContent: function() {

@@ -10,7 +10,9 @@ var actions = Reflux.createActions([
 	'initialAirQuilityData',
 
 	'navBarSelectedData',
-	'navBarSelectSubtrate'
+	'navBarSelectSubtrate',
+
+	'doSearch'
 ]);
 
 module.exports = actions;
