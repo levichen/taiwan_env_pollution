@@ -7,12 +7,11 @@ var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 
 var SearchDetail = React.createClass({
 	componentDidMount: function() {
-        var closeContent = React.findDOMNode(this.refs.close);
-				
-        closeContent.addEventListener('click', function() {
+		var closeContent = React.findDOMNode(this.refs.close);
+		closeContent.addEventListener('click', function() {
 			Actions.closeSearchContent();
-        });
-    },
+		});
+	},
 	render: function() {
 		var result = this.props.result;
 		var rows = [];

@@ -17,8 +17,8 @@ module.exports = Reflux.createStore({
 	onZoom: function(translate, scale) {
 		this.trigger(null, null, translate, scale);
 	},
-	onChangeLocation: function(countyId, cName) {
-		this.trigger(countyId, cName);
+	onChangeLocation: function(countyId, cName, translate, scale, center) {
+		this.trigger(countyId, cName, translate, scale, center);
 	}
 
 })

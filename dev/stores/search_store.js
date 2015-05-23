@@ -21,6 +21,7 @@ var SearchStore = Reflux.createStore({
 			if(data.feed.length == 0) {
 				return alert('查無資料');
 			}
+			Actions.changeLocation(null, null, null, null, [data.addrLocation.lng, data.addrLocation.lat]);
 			var data = {
 				enabled: true,
 				result: data.feed

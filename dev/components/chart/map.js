@@ -181,7 +181,11 @@ module.exports = React.createClass({
 						};
 					})(d3.event.translate, d3.event.scale), 30);
 				});
+			if(that.state.scale) {
+				zoom.scale(zoom.scale() * that.state.scale);
+			}
 			map.call(zoom);
+			map.call(zoom.event);
 			taipeiMap.selectAll('path')
 				.data(taiwan.features)
 				.enter()
@@ -224,29 +228,32 @@ module.exports = React.createClass({
 	},
 	onZoom: function(translate, scale) {
 	},
-	onChange: function(id, name, translate, scale) {
+	onChange: function(id, name, translate, scale, center) {
 		if(id !== null && name !== null) {
-			this.onChangeCounty(id, name);
+			this.onChangeCounty(id, name, center);
+		}
+		else if(center) {
+			this.onChangeCounty(0, '', center, 6);
 		}
 		else {
 			this.onZoom(translate, scale);
 		}
 	},
-	onChangeCounty: function(countyId, cName, zoom) {
+	onChangeCounty: function(countyId, cName, center, scale) {
 		var map = d3.select(React.findDOMNode(this.refs.map).parentNode);
 		var taipeiMap = map.select('g');
-		if(countyId == this.state.county.id)
+		if(countyId == this.state.county.id && !center)
 			return;
 		this.setState({
+			scale: scale,
 			county: {
 				geojson: countyId === 0 ? 'assets/geojson/country.json' : 'assets/geojson/twonship.json',
 				id: countyId,
 				scale: this.metadata[countyId].scale,
-				center: this.metadata[countyId].center,
+				center: center || this.metadata[countyId].center,
 				cName: cName,
 			}
 		});
-		taipeiMap.attr("transform", "");
 		this.drawMap();
 	}
 
