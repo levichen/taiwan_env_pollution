@@ -16,7 +16,8 @@ module.exports = React.createClass({
 	getInitialState: function() {
 		return {
 			radius: 40,
-			blur: 30
+			blur: 30,
+			pollitionType: 'PM10'
 		}
 	},
 
@@ -52,10 +53,10 @@ module.exports = React.createClass({
 	getMaxValue: function(data) {
 		var max = 0;
 		for (var i = 0; i < data.length; i++) {
-			if (data[i].AirQuility === undefined || data[i].AirQuility['PM2.5'] === undefined)  {
+			if (data[i].AirQuility === undefined || data[i].AirQuility[this.state.pollitionType] === undefined)  {
 				continue;
 			}
-			max = Math.max(max, +data[i].AirQuility['PM2.5']);
+			max = Math.max(max, +data[i].AirQuility[this.state.pollitionType]);
 		}
 		return max;
 	},
@@ -100,11 +101,11 @@ module.exports = React.createClass({
 
 		ctx.clearRect(0, 0, this.props.width, this.props.height);
 		for (var i = 0; i < data.length; i++) {
-			if (data[i].AirQuility === undefined || data[i].AirQuility['PM2.5'] === undefined)  {
+			if (data[i].AirQuility === undefined || data[i].AirQuility[this.state.pollitionType] === undefined)  {
 				continue;
 			}
 			
-			var rate = data[i].AirQuility['PM2.5'] / max;
+			var rate = data[i].AirQuility[this.state.pollitionType] / max;
 			coordinate = projection([data[i].loc.lng, data[i].loc.lat]);
 
 			ctx.shadowOffsetX = this.props.width;

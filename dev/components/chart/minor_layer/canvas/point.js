@@ -50,7 +50,7 @@ module.exports = React.createClass({
 
 		ctx.globalCompositeOperation = 'darken';
 
-		if (data['petition'] !== undefined) {
+		if (data !== undefined && data['petition'] !== undefined) {
 			ctx.fillStyle = "#66304E";
 			for (var i = 0; i < data['petition'].length; i++) {
 		        ctx.beginPath();
@@ -113,9 +113,11 @@ module.exports = React.createClass({
 				max = Math.max(max, val);
 			}
 
-			ctx.fillStyle = 'rgba(200, 0, 0, 0.5)';
+
+			var airPollutionType = 'VOCs';
+			ctx.fillStyle = 'rgba(64, 192, 160, 1)';
 			for (var i = 0; i < data[key].length; i++) {
-				var val = +data[key][i].SOx;
+				var val = +data[key][i][airPollutionType];
 				if (val === 0 || data[key][i].loc === undefined) {
 					continue;
 				}
