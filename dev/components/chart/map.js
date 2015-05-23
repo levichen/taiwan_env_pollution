@@ -174,7 +174,10 @@ module.exports = React.createClass({
 					var scale = d3.event.scale;
 					projection.translate(d3.event.translate).scale(d3.event.scale);
 					taipeiMap.selectAll("path").attr("d", path);
-					Actions.zoom(d3.event.translate, d3.event.scale);
+					clearTimeout(that.timer);
+					that.timer = setTimeout((function(translate, scale) {
+						Actions.zoom(translate, scale);
+					})(d3.event.translate, d3.event.scale), 30);
 				});
 			map.call(zoom);
 			taipeiMap.selectAll('path')

@@ -83,7 +83,6 @@ module.exports = React.createClass({
 		var x = this.props.width / 2;
 		var y = this.props.height / 2;
 		if(this.state.translate) {
-			console.log(this.state.translate);
 			x = this.state.translate[0];
 			y = this.state.translate[1];
 		}
@@ -128,12 +127,8 @@ module.exports = React.createClass({
 		this.grayToRGB(ctx, grad);
 	},
 	onMapChange: function(id, name, translate, scale) {
-		var that = this;
 		this.setState({translate: translate, scale: scale})
-		clearTimeout(this.timer);
-		this.timer = setTimeout(function() {
-			that.drawLayer();
-		}, 100);
+		this.drawLayer();
 	},
 	onDrawLayer: function(type) {
 		if (type === AirQuilityStore.type.INIT) {
@@ -141,7 +136,6 @@ module.exports = React.createClass({
 			this.drawLayer();
 		}
 		else {
-			console.log('drawlayer');
 			this.drawLayer();
 		}
 	}

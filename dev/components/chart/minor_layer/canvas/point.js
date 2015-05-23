@@ -3,12 +3,14 @@ var Reflux = require('reflux');
 var d3 = require('d3');
 var Actions = require('../../../../actions/Actions');
 var MoinorLayerStore = require('../../../../stores/MinorLayerStore');;
+var MapStore = require('../../../../stores/MapStore');;
 
 module.exports = React.createClass({
 
 	mixins: [
 		// Reflux.connect(MoinorLayerStore)
-		Reflux.listenTo(MoinorLayerStore, 'onDraw')
+		Reflux.listenTo(MoinorLayerStore, 'onDraw'),
+		Reflux.listenTo(MapStore, 'onMapChange')
 	],
 
 	getInitialState: function() {
@@ -28,10 +30,17 @@ module.exports = React.createClass({
 		var ctx = canvas.getContext('2d');
 		var data = this.state.data;
 		var coordinate;
+		var x = this.props.width / 2;
+		var y = this.props.height / 2;
+		if(this.state.translate) {
+			x = this.state.translate[0];
+			y = this.state.translate[1];
+		}
 		var projection = d3.geo.mercator()
-							.scale(this.props.county.scale)
+							.scale(this.state.scale || this.props.county.scale)
 							.center(this.props.county.center)
-							.translate([this.props.width / 2, this.props.height / 2]);
+							.translate([x, y]);
+	
 		var drawColor = {
 			"incinerators": "#88342B",
 			"garbage": "#5864E7",
@@ -59,7 +68,10 @@ module.exports = React.createClass({
 			}
 		}
 	},
-
+	onMapChange: function(id, name, translate, scale) {
+		this.setState({translate: translate, scale: scale})
+		this.drawLayer();
+	},
 	onDraw: function(type) {
 		if (type === MoinorLayerStore.type.CHANGE_SELECT) {
 			var data = {};
@@ -79,6 +91,5 @@ module.exports = React.createClass({
 		}
 		
 		this.drawLayer();
-	},
-
+	}
 });
