@@ -309,15 +309,17 @@ span {
 
 #search-content {
     position: absolute;
-    left: 20%;
+    right: 3%;
     top: 10%;
     z-index: 20;
-    min-width: 60%;
+    min-width: 42%;
 		padding: 1em;
-    height: 70%;
+    height: 80%;
     background: rgba(0, 0, 0, 0.85);
-		color: white;
+    background: rgba(9, 77, 10, 0.85);
+		color: lightgrey;
 		overflow:scroll;
+		border-radius: 5px;
 }
 #search-content table {
 	width:100%;
