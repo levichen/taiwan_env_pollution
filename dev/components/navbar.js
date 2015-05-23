@@ -25,10 +25,17 @@ var NavBarContent = React.createClass({
         });
 
         this.refs.searchClick.getDOMNode().addEventListener('click', function() {
-            var search_val = document.getElementById("search-val").value;
-            Actions.doSearch(search_val);
+           
         });
     },
+		search: function() {
+			 var search_val = document.getElementById("search-val").value;
+			 Actions.doSearch(search_val);
+		},
+		keypress: function(e) {
+			if(e.keyCode == 13)
+					this.search();
+		},
     renderContent: function() {
         var content = this.props.navList.map(function(listData) {
             var attr = {};
@@ -50,8 +57,8 @@ var NavBarContent = React.createClass({
                     <div className="icon-menu-white" />
                 </div>
                 <div className="search-box">
-                    <div className="center"><input type="text" id="search-val" /></div>
-                    <div className="center"><input type="button" value="Search"  ref="searchClick" /></div>
+                    <div className="center"><input onKeyDown={this.keypress} type="text" id="search-val" name="query" /></div>
+                    <div className="center"><input onClick={this.search} type="button" value="Search"  ref="searchClick" /></div>
                 </div>
                 {this.renderContent()}
             </div>

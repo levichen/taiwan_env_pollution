@@ -11,7 +11,6 @@ var MainContent = React.createClass({
 		return (
 			<div id="container">
 				<div className="content-title"><span>{title}</span></div>
-				<SearchResult />
 				<Content />
 			</div>
 		);
