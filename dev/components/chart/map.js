@@ -204,11 +204,14 @@ module.exports = React.createClass({
 					d3.event.preventDefault();
 				})
 				.on('mousedown', function(data, i) {
+					var contentTitle = data.properties.C_Name;
 					if(d3.event.button == 0)
-						Actions.changeLocation(data.properties.County_ID, data.properties.C_Name);
-					else if(d3.event.button == 2)
+						Actions.changeLocation(data.properties.County_ID, contentTitle);
+					else if(d3.event.button == 2) {
 						Actions.changeLocation(0, '');
-					Actions.changeContentTitle(data.properties.C_Name)
+						contentTitle = "台灣環境汙染圖";
+					}
+					Actions.changeContentTitle(contentTitle)
 				});
 		});
 	},
