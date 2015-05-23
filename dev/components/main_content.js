@@ -2,7 +2,6 @@ var React = require('react');
 var Reflux = require('reflux');
 var MainContentStore = require('../stores/MainContentStore');
 var Content = require('./chart/content');
-var SearchResult = require('./search_result');
 
 var MainContent = React.createClass({
 	mixins: [Reflux.connect(MainContentStore)],
