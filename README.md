@@ -6,7 +6,7 @@ http://tep.ltzuhsiu.org
 
 ####切換專案目錄
 ```
-cd {project_path}
+cd {project_path/frontend}
 ```
 
 ####安裝node_module

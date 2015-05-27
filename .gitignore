@@ -1,3 +1,4 @@
 .DS_Store
 node_modules
-app/assets/js/main.js
+backend/app.config.js
+frontend/app/assets/js/main.js
